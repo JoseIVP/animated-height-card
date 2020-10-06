@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+
+    <style>
+        :root{
+            font-family: Arial, Helvetica, sans-serif;
+            --color-primary: #4f4f4f;
+            --bg-card: white;
+        }
+
+        *{
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+
+        h2{
+            font-size: 2rem;
+            color: var(--color-primary);
+        }
+
+        button{
+            outline: none;
+        }
+
+        details{
+            background-color: var(--bg-light);
+            overflow: hidden;
+            position: relative;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            border: 1px solid #bdbdbd;
+            max-width: 600px;
+        }
+
+        summary{
+            list-style: none;
+            outline: none;
+            padding: 1rem;
+            background-color: var(--bg-light);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* For chrome */
+        summary::-webkit-details-marker{
+            display: none;
+        }
+
+        summary > .toggle {
+            position: absolute;
+            bottom: calc((100% - 3rem) / 2);
+            right: 1rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 3rem;
+            font-size: 2.5rem;
+            transition: transform 150ms,
+                bottom 150ms;
+            color: #828282;
+            background-color: #f2f2f2;
+        }
+
+        summary > .toggle *{
+            vertical-align: middle;
+        }
+
+        details[open] .toggle {
+            transform: rotate(180deg);
+            bottom: 1rem;
+        }
+
+        summary > .dummy-btn {
+            transition: margin-right 150ms;
+            margin-right: 4rem;
+        }
+
+        details[open] .dummy-btn {
+            margin-right: 0;
+        }
+
+        details > section {
+            margin-right: 4.5rem;
+            text-align: justify;
+            padding: 1em;
+            padding-top: 0;
+            font-size: 1.2rem;
+        }
+
+        #container {
+            margin: 20px;
+        }
+
+        .dummy-btn {
+            background-color: #2f80ed;
+            color: white;
+            font-size: 1rem;
+            padding: 0.5em;
+            border-radius: 0.3em;
+        }
+    </style>
+
+    <details id="container" open>
+        <summary>
+            <h2>Card header</h2> 
+            <button type="button" class="dummy-btn">Dummy button</button>
+            <button type="button" class="toggle" id="toggle-btn">
+                <i class="fas fa-angle-down"></i>
+            </button>
+        </summary>
+        <section>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet, vitae perspiciatis non magni unde repellendus accusamus
+            sequi voluptatibus repudiandae suscipit mollitia quaerat dolorum blanditiis rerum quia voluptatum, explicabo aperiam
+            repellat.  
+        </section>
+    </details>
+
+    <script>
+        function heightTransition(element, from, to, duration, auto=true){
+            let startTime = null;
+            const heightDiff = to - from;
+            const {style} = element;
+            function animate(timestamp){
+                if(startTime === null)
+                    startTime = timestamp;
+                const timeDiff = timestamp - startTime;
+                if(timeDiff >= duration){
+                    style.height = auto ? "auto" : to;
+                    end();
+                    return;
+                }
+                style.height = (from + timeDiff / duration * heightDiff) + "px";
+                requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        }
+
+        const container = document.getElementById("container");
+        container.addEventListener("click", e => e.preventDefault());
+        const toggleBtn = document.getElementById("toggle-btn");
+        toggleBtn.addEventListener("click", (event) => {
+            const h1 = parseInt(getComputedStyle(container).height);
+            container.open= !container.open;
+            const h2 = parseInt(getComputedStyle(container).height);
+            heightTransition(container, h1, h2, 150);
+        });
+    </script>
+    
+    
+</body>
+</html>
