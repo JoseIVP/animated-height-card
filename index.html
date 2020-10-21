@@ -131,7 +131,10 @@
         <section>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet, vitae perspiciatis non magni unde repellendus accusamus
             sequi voluptatibus repudiandae suscipit mollitia quaerat dolorum blanditiis rerum quia voluptatum, explicabo aperiam
-            repellat. 
+            repellat.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet, vitae perspiciatis non magni unde repellendus accusamus
+            sequi voluptatibus repudiandae suscipit mollitia quaerat dolorum blanditiis rerum quia voluptatum, explicabo aperiam
+            repellat.
         </section>
     </details>
 
@@ -149,7 +152,6 @@
         container.addEventListener("click", e => e.preventDefault());
         const toggleBtn = document.getElementById("toggle-btn");
         toggleBtn.addEventListener("click", (event) => {
-            const wasOpen = container.open;
             const h1 = parseInt(getComputedStyle(container).height);
             container.open= !container.open;
             const h2 = parseInt(getComputedStyle(container).height);
