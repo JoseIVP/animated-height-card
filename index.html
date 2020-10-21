@@ -37,7 +37,6 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
             border: 1px solid #bdbdbd;
-            max-width: 600px;
         }
 
         summary{
@@ -46,7 +45,11 @@
             padding: 1rem;
             background-color: var(--bg-light);
             display: flex;
-            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        details[open] > summary {
+            border-bottom: 1px solid #c7c7c7;
         }
 
         /* For chrome */
@@ -77,40 +80,50 @@
             bottom: 1rem;
         }
 
-        summary > .dummy-btn {
-            transition: margin-right 150ms;
-            margin-right: 4rem;
-        }
-
-        details[open] .dummy-btn {
-            margin-right: 0;
-        }
-
         details > section {
-            margin-right: 4.5rem;
+            margin-right: 4rem;
             text-align: justify;
-            padding: 1em;
-            padding-top: 0;
+            padding: 1rem;
             font-size: 1.2rem;
+            min-height: 200px;
+            box-sizing: border-box;
+            color: var(--color-primary);
         }
 
-        #container {
-            margin: 20px;
-        }
-
-        .dummy-btn {
+        .btn{
             background-color: #2f80ed;
             color: white;
             font-size: 1rem;
             padding: 0.5em;
             border-radius: 0.3em;
         }
+
+        menu {
+            margin-left: auto;
+            margin-right: 4rem;
+            transition: margin-right 150ms;
+        }
+
+        details[open] menu{
+            margin-right: 0;
+        }
+
+        menu > button:not(:first-child) {
+            margin-left: .8rem;
+        }
+
+        #container {
+            margin: 20px;
+        }
     </style>
 
     <details id="container" open>
         <summary>
             <h2>Card header</h2> 
-            <button type="button" class="dummy-btn">Dummy button</button>
+            <menu>
+                <button type="button" class="btn">Dummy</button>
+                <button type="button" class="btn">Bigger dummy</button>
+            </menu>
             <button type="button" class="toggle" id="toggle-btn">
                 <i class="fas fa-angle-down"></i>
             </button>
@@ -118,34 +131,25 @@
         <section>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet, vitae perspiciatis non magni unde repellendus accusamus
             sequi voluptatibus repudiandae suscipit mollitia quaerat dolorum blanditiis rerum quia voluptatum, explicabo aperiam
-            repellat.  
+            repellat. 
         </section>
     </details>
 
     <script>
-        function heightTransition(element, from, to, duration, auto=true){
-            let startTime = null;
-            const heightDiff = to - from;
-            const {style} = element;
-            function animate(timestamp){
-                if(startTime === null)
-                    startTime = timestamp;
-                const timeDiff = timestamp - startTime;
-                if(timeDiff >= duration){
-                    style.height = auto ? "auto" : to;
-                    end();
-                    return;
-                }
-                style.height = (from + timeDiff / duration * heightDiff) + "px";
-                requestAnimationFrame(animate);
-            }
-            requestAnimationFrame(animate);
+        function heightTransition(element, from, to, duration){
+            const keyframes = [
+                {height: from + "px"},
+                {height: to + "px"}
+            ];
+            const options = { duration }
+            element.animate(keyframes, options);
         }
 
         const container = document.getElementById("container");
         container.addEventListener("click", e => e.preventDefault());
         const toggleBtn = document.getElementById("toggle-btn");
         toggleBtn.addEventListener("click", (event) => {
+            const wasOpen = container.open;
             const h1 = parseInt(getComputedStyle(container).height);
             container.open= !container.open;
             const h2 = parseInt(getComputedStyle(container).height);
