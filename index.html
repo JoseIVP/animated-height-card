@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="css/all.css">
 </head>
 <body>
-
     <style>
         :root{
             --color-primary: #4f4f4f;
@@ -30,6 +29,7 @@
 
         button{
             outline: none;
+            transition: box-shadow .15s;
         }
 
         details{
@@ -140,7 +140,7 @@
                 <button type="button" class="btn">Dummy</button>
                 <button type="button" class="btn">Bigger dummy</button>
             </menu>
-            <button type="button" class="toggle" id="toggle-btn">
+            <button type="button" class="toggle">
                 <i class="fas fa-angle-down"></i>
             </button>
         </summary>
@@ -166,7 +166,7 @@
 
         const container = document.getElementById("container");
         container.addEventListener("click", e => e.preventDefault());
-        const toggleBtn = document.getElementById("toggle-btn");
+        const toggleBtn = document.querySelector(".toggle");
         toggleBtn.addEventListener("click", (event) => {
             const h1 = parseInt(getComputedStyle(container).height);
             container.open= !container.open;
@@ -174,7 +174,5 @@
             heightTransition(container, h1, h2, 150);
         });
     </script>
-    
-    
 </body>
 </html>
