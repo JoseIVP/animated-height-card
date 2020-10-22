@@ -10,15 +10,17 @@
 
     <style>
         :root{
-            font-family: Arial, Helvetica, sans-serif;
             --color-primary: #4f4f4f;
-            --bg-card: white;
+            --bg-light: white;
+            --bg-primary: #2f80ed;
+            --bg-primary-light: #85b5f4;
         }
 
         *{
             margin: 0;
             padding: 0;
             border: none;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         h2{
@@ -44,8 +46,11 @@
             outline: none;
             padding: 1rem;
             background-color: var(--bg-light);
-            display: flex;
             box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: .6rem;
         }
 
         details[open] > summary {
@@ -57,9 +62,9 @@
             display: none;
         }
 
-        summary > .toggle {
+        .toggle {
             position: absolute;
-            bottom: calc((100% - 3rem) / 2);
+            bottom: calc((min(5rem, 100%) - 3rem) / 2);
             right: 1rem;
             width: 3rem;
             height: 3rem;
@@ -71,8 +76,14 @@
             background-color: #f2f2f2;
         }
 
-        summary > .toggle *{
-            vertical-align: middle;
+        .toggle:focus{
+            box-shadow: 0 0 0 .2rem #c5c5c5;
+        }
+
+        .toggle i{
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         details[open] .toggle {
@@ -80,8 +91,8 @@
             bottom: 1rem;
         }
 
-        details > section {
-            margin-right: 4rem;
+        section {
+            margin-bottom: 4rem;
             text-align: justify;
             padding: 1rem;
             font-size: 1.2rem;
@@ -91,33 +102,38 @@
         }
 
         .btn{
-            background-color: #2f80ed;
+            background-color: var(--bg-primary);
             color: white;
             font-size: 1rem;
             padding: 0.5em;
             border-radius: 0.3em;
         }
 
+        .btn:focus{
+            box-shadow: 0 0 0 .25em var(--bg-primary-light);
+        }
+
         menu {
-            margin-left: auto;
             margin-right: 4rem;
             transition: margin-right 150ms;
+            display: flex;
+            gap: .8rem;
+            flex-wrap: wrap;
         }
 
         details[open] menu{
             margin-right: 0;
         }
 
-        menu > button:not(:first-child) {
-            margin-left: .8rem;
-        }
-
         #container {
-            margin: 20px;
+            width: 96vw;
+            max-width: 800px;
+            margin: auto;
+            margin-top: 1rem;
         }
     </style>
 
-    <details id="container" open>
+    <details id="container" >
         <summary>
             <h2>Card header</h2> 
             <menu>
